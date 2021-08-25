@@ -74,12 +74,14 @@ function App() {
     <div className="App">
       <Router>
         <Switch>
-          <Route exact path="/countries-list">
+          {/* <Route exact path="/countries-list?country=:countryName">
             <CountryList countriesList={searchedCountries} />
-          </Route>
-          <Route exact path="/">
-            <CountryForm onCountriesSearched={(data : CountriesData[]) => SetSearchedCountries(data)} />
-          </Route>
+          </Route> */}
+          {/* <Route exact path="/">
+            <CountryForm onCountriesSearched={(data: CountriesData[]) => SetSearchedCountries(data)} />
+          </Route> */}
+          <Route exact path="/" component={CountryForm} />
+          <Route exact path="/country-list/:countryName" component={CountryList} />
         </Switch>
       </Router>
     </div>

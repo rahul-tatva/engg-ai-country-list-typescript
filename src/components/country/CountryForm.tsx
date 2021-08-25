@@ -34,6 +34,7 @@ interface CountryFormProp {
 }
 
 const CountryForm = (props: CountryFormProp) => {
+
     const { onCountriesSearched } = props;
     const classes = useStyles();
     const history = useHistory();
@@ -50,15 +51,16 @@ const CountryForm = (props: CountryFormProp) => {
                         autoComplete="off"
                         onSubmit={(event) => {
                             event.preventDefault();
+                            history.push(`/country-list/${countryNameInput}`);
                             // call api with country name
-                            http.get(`name/${countryNameInput}`)
-                                .then((response: AxiosResponse<CountriesData[]>) => {
-                                    onCountriesSearched(response.data);
-                                    history.push('/countries-list');
-                                })
-                                .catch((error) => {
-                                    console.log(error);
-                                });
+                            // http.get(`name/${countryNameInput}`)
+                            //     .then((response: AxiosResponse<CountriesData[]>) => {
+                            //         onCountriesSearched(response.data);
+                            //         history.push('/countries-list');
+                            //     })
+                            //     .catch((error) => {
+                            //         console.log(error);
+                            //     });
                         }}
                     >
                         <TextField
