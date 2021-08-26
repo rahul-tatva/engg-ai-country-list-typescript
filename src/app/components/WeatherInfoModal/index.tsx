@@ -5,11 +5,13 @@ import Typography from "@material-ui/core/Typography";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
-import { makeStyles } from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 import { ICapitalWeatherInfo } from "app/utils/interfaces/weather";
 import Avatar from "@material-ui/core/Avatar";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme: Theme) => ({
   root: {
     maxWidth: 345,
     minHeight: 200,
@@ -22,7 +24,19 @@ const useStyles = makeStyles({
     display: "flex",
     justifyContent: "center",
   },
-});
+  closeButton: {
+    position: "absolute",
+    right: theme.spacing(1),
+    top: theme.spacing(1),
+    color: theme.palette.grey[500],
+  },
+  centerContent: {
+    alignItems: "center",
+    display: "flex",
+    justifyContent: "center",
+    flexDirection: "column",
+  },
+}));
 
 interface WeatherInfoModalProps {
   open: boolean;
@@ -35,17 +49,33 @@ const WeatherInfoModal: React.FC<WeatherInfoModalProps> = (
 ) => {
   const { open, handleClose, capitalWeatherInfo } = props;
   const classes = useStyles();
-  debugger;
   return (
     <Dialog
       onClose={handleClose}
       aria-labelledby="customized-dialog-title"
       open={open}
+      fullWidth={true}
+      maxWidth={"sm"}
     >
-      <DialogTitle id="customized-dialog-title">
-        Weather Information
+      <DialogTitle disableTypography id="customized-dialog-title">
+        <Typography variant="h6">Weather Information</Typography>
+        <IconButton
+          aria-label="close"
+          className={classes.closeButton}
+          onClick={handleClose}
+        >
+          <CloseIcon />
+        </IconButton>
+        {/* <IconButton
+          edge="start"
+          color="inherit"
+          onClick={handleClose}
+          aria-label="close"
+        >
+          <CloseIcon />
+        </IconButton> */}
       </DialogTitle>
-      <DialogContent dividers>
+      <DialogContent dividers className={classes.centerContent}>
         <Typography variant="h4">{capitalWeatherInfo.location.name}</Typography>
         {capitalWeatherInfo.current.weather_icons?.map(
           (weatherIconUrl: any) => {
@@ -76,6 +106,7 @@ const WeatherInfoModal: React.FC<WeatherInfoModalProps> = (
           autoFocus
           onClick={handleClose}
           color="primary"
+          className={classes.centerContent}
         >
           Close
         </Button>

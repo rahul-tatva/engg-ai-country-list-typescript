@@ -44,7 +44,7 @@ const CountryList: React.FC = () => {
 
   return (
     <Container className={classes.cardGrid} maxWidth="md">
-      <Grid container spacing={4} justify="center">
+      <Grid container spacing={4} justifyContent="center">
         {loading && <CircularProgress size={60} />}
 
         {countries.map((country: ICountry) => {
