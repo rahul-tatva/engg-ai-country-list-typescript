@@ -77,7 +77,7 @@ function App() {
         <Navbar/>
         <Switch>
           <Route exact path="/" component={CountrySearchForm} />
-          <Route exact path="/country-list/:countryName" component={CountryList} />
+          <Route path="/country-list/:countryName" component={CountryList} />
         </Switch>
       </Router>
     </div>

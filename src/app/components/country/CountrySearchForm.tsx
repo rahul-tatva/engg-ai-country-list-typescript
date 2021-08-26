@@ -78,7 +78,7 @@ const CountrySearchForm = (props: CountryFormProp) => {
                         <Button
                             variant="contained"
                             color="primary"
-                            disabled={countryNameInput.length > 0 ? false : true}
+                            disabled={countryNameInput === ''}
                             type="submit"
                             fullWidth
                             className={classes.submit}
