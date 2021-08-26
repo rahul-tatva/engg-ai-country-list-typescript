@@ -1,12 +1,8 @@
 import { useState } from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-} from "react-router-dom";
-import CountrySearchForm from "./components/country/CountrySearchForm";
-import CountryList from "./components/country/CountryList";
-import Navbar from "./components/navbar/Navbar";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import CountrySearchForm from "./components/CountrySearchForm";
+import CountryList from "./components/CountryList";
+import Navbar from "./Navbar";
 
 export interface Currency {
   code: string;
@@ -69,12 +65,12 @@ export interface CountriesData {
 }
 
 function App() {
-  const [searchedCountries, SetSearchedCountries] = useState<CountriesData[]>([]);
+  // const [searchedCountries, SetSearchedCountries] = useState<CountriesData[]>([]);
 
   return (
     <div className="App">
       <Router>
-        <Navbar/>
+        <Navbar />
         <Switch>
           <Route exact path="/" component={CountrySearchForm} />
           <Route path="/country-list/:countryName" component={CountryList} />

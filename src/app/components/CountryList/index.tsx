@@ -10,7 +10,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router";
 import { CountriesData } from "../../App";
 import http from "../../services/http.service";
-import CountryCard from "./CountryCard";
+import CountryCard from "../CountryCard";
 
 const useStyles = makeStyles((theme) => ({
   cardGrid: {
@@ -37,7 +37,7 @@ const CountryList = () => {
   useEffect(() => {
     // call api with country name
     http
-      .get(`name/${locationParams.countryName}`)
+      .get(`name/all`)
       .then((response: AxiosResponse<CountriesData[]>) => {
         debugger;
         setLoading(true);
@@ -53,10 +53,10 @@ const CountryList = () => {
     <div>
       <Container className={classes.cardGrid} maxWidth="md">
         <Grid container spacing={4} justify="center">
-          {loading && <CircularProgress size={60} />}
+          {/* {loading && <CircularProgress size={60} />}
           <Typography gutterBottom variant="h6">
             No data found!
-          </Typography>
+          </Typography> */}
           {countries.map((country) => {
             return (
               <Grid item key={country.alpha2Code} xs={12} sm={6} md={4}>

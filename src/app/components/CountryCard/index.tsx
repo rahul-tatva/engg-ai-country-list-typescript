@@ -7,7 +7,7 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import { CardMedia } from "@material-ui/core";
-import WeatherInfoModal from "../weather/WeatherInfoModal";
+import WeatherInfoModal from "components/WeatherInfoModal";
 import {
   WEATHER_API_ACCESS_KEY,
   WEATHER_API_BASE_URL,
@@ -71,7 +71,6 @@ export interface Current {
 }
 
 export interface WeatherData {
-  request: Request;
   location: Location;
   current: Current;
 }
@@ -83,7 +82,7 @@ const CountryCard = (props: CountryCardProp) => {
   );
   const { country } = props;
   const classes = useStyles();
-  const handleClickOpen = (currentCountry: CountriesData) => {
+  const handleClickOpenModal = (currentCountry: CountriesData) => {
     const apiEndpoint = `current?access_key=${WEATHER_API_ACCESS_KEY}&query=${currentCountry.capital}`;
     Axios.get(WEATHER_API_BASE_URL + apiEndpoint)
       .then((response: AxiosResponse<WeatherData>) => {
@@ -123,7 +122,7 @@ const CountryCard = (props: CountryCardProp) => {
               </Typography>
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
-              Population - {country.population}
+              Population : {country.population}
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
               Latitude, Longitude :{" "}
@@ -133,7 +132,7 @@ const CountryCard = (props: CountryCardProp) => {
         </CardActionArea>
         <CardActions>
           <Button
-            onClick={() => handleClickOpen(country)}
+            onClick={() => handleClickOpenModal(country)}
             variant="contained"
             color="primary"
             size="small"
