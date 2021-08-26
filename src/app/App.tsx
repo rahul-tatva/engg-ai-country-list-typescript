@@ -4,7 +4,7 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
-import CountryForm from "./components/country/CountryForm";
+import CountrySearchForm from "./components/country/CountrySearchForm";
 import CountryList from "./components/country/CountryList";
 import Navbar from "./components/navbar/Navbar";
 
@@ -76,7 +76,7 @@ function App() {
       <Router>
         <Navbar/>
         <Switch>
-          <Route exact path="/" component={CountryForm} />
+          <Route exact path="/" component={CountrySearchForm} />
           <Route exact path="/country-list/:countryName" component={CountryList} />
         </Switch>
       </Router>

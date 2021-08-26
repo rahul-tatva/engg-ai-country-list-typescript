@@ -33,7 +33,7 @@ interface CountryFormProp {
     onCountriesSearched: (CountriesData: CountriesData[]) => void
 }
 
-const CountryForm = (props: CountryFormProp) => {
+const CountrySearchForm = (props: CountryFormProp) => {
 
     const { onCountriesSearched } = props;
     const classes = useStyles();
@@ -92,4 +92,4 @@ const CountryForm = (props: CountryFormProp) => {
     );
 };
 
-export default CountryForm;
+export default CountrySearchForm;
