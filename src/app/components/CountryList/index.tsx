@@ -5,12 +5,12 @@ import {
   makeStyles,
   Typography,
 } from "@material-ui/core";
-import { AxiosResponse } from "axios";
+import countryService from "app/services/country-service";
+import { ICountry } from "app/utils/interfaces/country";
 import React, { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router";
-import { CountriesData } from "../../App";
-import http from "../../services/http.service";
-import CountryCard from "../CountryCard";
+import { useParams } from "react-router";
+import CountryCard from "app/components/CountryCard";
+import { ERROR_FETCHING_COUNTRIES } from "app/utils/messages";
 
 const useStyles = makeStyles((theme) => ({
   cardGrid: {
@@ -19,54 +19,48 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface CountryListProp {
-  countriesList: CountriesData[];
-}
-
-// const CountryList = (props: CountryListProp) => {
-const CountryList = () => {
+const CountryList: React.FC = () => {
   const classes = useStyles();
-  debugger;
-  const locationParams = useParams<{
-    countryName: string;
-  }>();
-  const [loading, setLoading] = useState(false);
-  const [countries, setCountries] = useState<any[]>([]);
-  console.log(locationParams);
+  const { countryName } = useParams<{ countryName: string }>();
+  const [loading, setLoading] = useState(true);
+  const [countries, setCountries] = useState<ICountry[]>([]);
 
+  const getCountries = async () => {
+    try {
+      // setLoading(true);
+      const result = await countryService.getByName(countryName);
+      if (result.data) {
+        setCountries(result.data);
+      }
+    } catch (e) {
+      // alert(e);
+    } finally {
+      setLoading(false);
+    }
+  };
   useEffect(() => {
-    // call api with country name
-    http
-      .get(`name/all`)
-      .then((response: AxiosResponse<CountriesData[]>) => {
-        debugger;
-        setLoading(true);
-        setCountries(response.data);
-      })
-      .catch((error: any) => {
-        setLoading(false);
-        console.log(error);
-      });
+    getCountries();
   }, []);
 
   return (
-    <div>
-      <Container className={classes.cardGrid} maxWidth="md">
-        <Grid container spacing={4} justify="center">
-          {/* {loading && <CircularProgress size={60} />}
+    <Container className={classes.cardGrid} maxWidth="md">
+      <Grid container spacing={4} justify="center">
+        {loading && <CircularProgress size={60} />}
+
+        {countries.map((country: ICountry) => {
+          return (
+            <Grid item key={country.alpha2Code} xs={12} sm={6} md={4}>
+              <CountryCard country={country} />
+            </Grid>
+          );
+        })}
+        {!loading && countries.length === 0 && (
           <Typography gutterBottom variant="h6">
-            No data found!
-          </Typography> */}
-          {countries.map((country) => {
-            return (
-              <Grid item key={country.alpha2Code} xs={12} sm={6} md={4}>
-                <CountryCard country={country} />
-              </Grid>
-            );
-          })}
-        </Grid>
-      </Container>
-    </div>
+            {ERROR_FETCHING_COUNTRIES}
+          </Typography>
+        )}
+      </Grid>
+    </Container>
   );
 };
 

@@ -5,8 +5,9 @@ import Typography from "@material-ui/core/Typography";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
-import { Current } from "../CountryCard";
-import { Avatar, makeStyles } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
+import { ICapitalWeatherInfo } from "app/utils/interfaces/weather";
+import Avatar from "@material-ui/core/Avatar";
 
 const useStyles = makeStyles({
   root: {
@@ -25,8 +26,7 @@ const useStyles = makeStyles({
 
 interface WeatherInfoModalProps {
   open: boolean;
-  //   capitalWeatherInfo: Current;
-  capitalWeatherInfo: any;
+  capitalWeatherInfo: ICapitalWeatherInfo;
   handleClose: () => void;
 }
 
@@ -42,7 +42,7 @@ const WeatherInfoModal: React.FC<WeatherInfoModalProps> = (
       aria-labelledby="customized-dialog-title"
       open={open}
     >
-      <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+      <DialogTitle id="customized-dialog-title">
         Weather Information
       </DialogTitle>
       <DialogContent dividers>

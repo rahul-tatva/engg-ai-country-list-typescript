@@ -2,12 +2,10 @@ import React, { useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
-import http from "../../services/http.service";
 import { useHistory } from "react-router-dom";
 import Container from "@material-ui/core/Container";
 import { CssBaseline } from "@material-ui/core";
-import { CountriesData } from "../../App";
-import { AxiosResponse } from "axios";
+import { Routes } from "app/utils/enums/routes";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -32,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 const CountrySearchForm: React.FC = () => {
   const classes = useStyles();
   const history = useHistory();
-  const [countryNameInput, setCountryNameInput] = useState("");
+  const [countryNameInput, setCountryNameInput] = useState<string>("");
 
   return (
     <Container component="main" maxWidth="xs">
@@ -44,7 +42,7 @@ const CountrySearchForm: React.FC = () => {
           autoComplete="off"
           onSubmit={(e) => {
             e.preventDefault();
-            history.push(`/country-list/${countryNameInput}`);
+            history.push(`${Routes.Countries}/${countryNameInput}`);
           }}
         >
           <TextField
@@ -54,10 +52,7 @@ const CountrySearchForm: React.FC = () => {
             autoFocus
             label="Enter Country"
             variant="outlined"
-            onChange={(e) => {
-              const { value } = e.target;
-              setCountryNameInput(value);
-            }}
+            onChange={(e) => setCountryNameInput(e.target.value)}
           />
           <Button
             variant="contained"

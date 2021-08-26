@@ -7,14 +7,11 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import { CardMedia } from "@material-ui/core";
-import WeatherInfoModal from "components/WeatherInfoModal";
-import {
-  WEATHER_API_ACCESS_KEY,
-  WEATHER_API_BASE_URL,
-} from "../../utils/constants";
-import Axios, { AxiosResponse } from "axios";
+import WeatherInfoModal from "app/components/WeatherInfoModal";
 import { ERROR_FETCHING_WEATHER } from "../../utils/messages";
-import { CountriesData } from "../../App";
+import { ICountry } from "app/utils/interfaces/country";
+import { ICapitalWeatherInfo } from "app/utils/interfaces/weather";
+import weatherService from "app/services/weather-service";
 
 const useStyles = makeStyles({
   root: {
@@ -29,80 +26,36 @@ const useStyles = makeStyles({
 });
 
 interface CountryCardProp {
-  country: CountriesData;
-}
-
-export interface Request {
-  type: string;
-  query: string;
-  language: string;
-  unit: string;
-}
-
-export interface Location {
-  name: string;
-  country: string;
-  region: string;
-  lat: string;
-  lon: string;
-  timezone_id: string;
-  localtime: string;
-  localtime_epoch: number;
-  utc_offset: string;
-}
-
-export interface Current {
-  observation_time: string;
-  temperature: number;
-  weather_code: number;
-  weather_icons: string[];
-  weather_descriptions: string[];
-  wind_speed: number;
-  wind_degree: number;
-  wind_dir: string;
-  pressure: number;
-  precip: number;
-  humidity: number;
-  cloudcover: number;
-  feelslike: number;
-  uv_index: number;
-  visibility: number;
-  is_day: string;
-}
-
-export interface WeatherData {
-  location: Location;
-  current: Current;
+  country: ICountry;
 }
 
 const CountryCard = (props: CountryCardProp) => {
   const [openModal, setOpenModal] = React.useState(false);
-  const [capitalWeatherInfo, setCapitalWeatherInfo] = useState<WeatherData>(
-    {} as WeatherData
-  );
+  const [capitalWeatherInfo, setCapitalWeatherInfo] =
+    useState<ICapitalWeatherInfo>({} as ICapitalWeatherInfo);
   const { country } = props;
   const classes = useStyles();
-  const handleClickOpenModal = (currentCountry: CountriesData) => {
-    const apiEndpoint = `current?access_key=${WEATHER_API_ACCESS_KEY}&query=${currentCountry.capital}`;
-    Axios.get(WEATHER_API_BASE_URL + apiEndpoint)
-      .then((response: AxiosResponse<WeatherData>) => {
-        const { data } = response;
-        debugger;
-        setCapitalWeatherInfo(data);
+  const handleGetCapitalWeatherInfo = async (currentCountry: ICountry) => {
+    try {
+      const result = await weatherService.getWeatherByCity(
+        currentCountry.capital
+      );
+      if (result.data) {
+        setCapitalWeatherInfo(result.data);
         setOpenModal(true);
-      })
-      .catch((error) => {
-        alert(ERROR_FETCHING_WEATHER);
-        console.log(error);
-      });
+      }
+    } catch (e) {
+      alert(e);
+      alert(ERROR_FETCHING_WEATHER);
+    } finally {
+    }
   };
-
   const handleClose = () => {
     setOpenModal(false);
   };
 
   return (
-    <div>
+    <>
       <Card className={classes.root}>
         <CardActionArea>
           <CardMedia
@@ -132,7 +85,7 @@ const CountryCard = (props: CountryCardProp) => {
         </CardActionArea>
         <CardActions>
           <Button
-            onClick={() => handleClickOpenModal(country)}
+            onClick={() => handleGetCapitalWeatherInfo(country)}
             variant="contained"
             color="primary"
             size="small"
@@ -149,7 +102,7 @@ const CountryCard = (props: CountryCardProp) => {
           capitalWeatherInfo={capitalWeatherInfo}
         />
       )}
-    </div>
+    </>
   );
 };
 
