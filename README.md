@@ -1,6 +1,8 @@
 npx create-react-app . --template typescript
 
+yarn add package
 
+axios react-router-dom @types/react-router-dom @material-ui/icons prettier
 
 
 # Getting Started with Create React App

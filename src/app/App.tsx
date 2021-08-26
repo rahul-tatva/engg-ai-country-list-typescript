@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import CountryForm from "./components/country/CountryForm";
 import CountryList from "./components/country/CountryList";
+import Navbar from "./components/navbar/Navbar";
 
 export interface Currency {
   code: string;
@@ -73,13 +74,8 @@ function App() {
   return (
     <div className="App">
       <Router>
+        <Navbar/>
         <Switch>
-          {/* <Route exact path="/countries-list?country=:countryName">
-            <CountryList countriesList={searchedCountries} />
-          </Route> */}
-          {/* <Route exact path="/">
-            <CountryForm onCountriesSearched={(data: CountriesData[]) => SetSearchedCountries(data)} />
-          </Route> */}
           <Route exact path="/" component={CountryForm} />
           <Route exact path="/country-list/:countryName" component={CountryList} />
         </Switch>
