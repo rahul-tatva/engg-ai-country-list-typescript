@@ -68,12 +68,15 @@ const CountryList: React.FC = () => {
     getCountries();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
   return (
     <Container className={classes.cardGrid} maxWidth="md">
       <Grid container spacing={4} justifyContent="center">
         {loading && <CircularProgress size={60} />}
-
+        {!loading && countries.length === 0 && (
+          <Typography gutterBottom variant="h6">
+            {ERROR_FETCHING_COUNTRIES}
+          </Typography>
+        )}
         {countries.map((country: ICountry) => {
           return (
             <Grid item key={country.alpha2Code} xs={12} sm={6} md={4}>
@@ -86,11 +89,6 @@ const CountryList: React.FC = () => {
             </Grid>
           );
         })}
-        {!loading && countries.length && (
-          <Typography gutterBottom variant="h6">
-            {ERROR_FETCHING_COUNTRIES}
-          </Typography>
-        )}
         <WeatherInfoModal
           open={showWeatherInfoModal}
           handleClose={handleClose}
