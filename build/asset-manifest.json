@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/engg-ai-country-list-typescript/static/css/main.4a4137e4.chunk.css",
+    "main.js": "/engg-ai-country-list-typescript/static/js/main.49130f77.chunk.js",
+    "main.js.map": "/engg-ai-country-list-typescript/static/js/main.49130f77.chunk.js.map",
+    "runtime-main.js": "/engg-ai-country-list-typescript/static/js/runtime-main.63525624.js",
+    "runtime-main.js.map": "/engg-ai-country-list-typescript/static/js/runtime-main.63525624.js.map",
+    "static/js/2.06710da4.chunk.js": "/engg-ai-country-list-typescript/static/js/2.06710da4.chunk.js",
+    "static/js/2.06710da4.chunk.js.map": "/engg-ai-country-list-typescript/static/js/2.06710da4.chunk.js.map",
+    "static/js/3.6c121be7.chunk.js": "/engg-ai-country-list-typescript/static/js/3.6c121be7.chunk.js",
+    "static/js/3.6c121be7.chunk.js.map": "/engg-ai-country-list-typescript/static/js/3.6c121be7.chunk.js.map",
+    "index.html": "/engg-ai-country-list-typescript/index.html",
+    "static/css/main.4a4137e4.chunk.css.map": "/engg-ai-country-list-typescript/static/css/main.4a4137e4.chunk.css.map",
+    "static/js/2.06710da4.chunk.js.LICENSE.txt": "/engg-ai-country-list-typescript/static/js/2.06710da4.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.63525624.js",
+    "static/js/2.06710da4.chunk.js",
+    "static/css/main.4a4137e4.chunk.css",
+    "static/js/main.49130f77.chunk.js"
+  ]
+}
