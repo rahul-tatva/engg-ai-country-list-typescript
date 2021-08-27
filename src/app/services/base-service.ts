@@ -1,3 +1,4 @@
+import { INTERNAL_SERVER_ERROR, SOMETHING_WENT_WRONG } from "app/utils/constants";
 import { HttpStatusCodes } from "app/utils/enums/http-status-codes";
 import axios, { AxiosError, AxiosResponse } from "axios";
 
@@ -12,9 +13,9 @@ httpClient.interceptors.response.use(
         break;
       case HttpStatusCodes.InternalServerError:
         if (process.env.NODE_ENV === "development") {
-          console.log("Internal Server Error");
+          console.log(INTERNAL_SERVER_ERROR);
         } else {
-          console.log("Something went wrong");
+          console.log(SOMETHING_WENT_WRONG);
         }
         break;
       default:

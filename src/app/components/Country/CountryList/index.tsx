@@ -14,7 +14,7 @@ import {
   ERROR_FETCHING_COUNTRIES,
   ERROR_FETCHING_WEATHER,
 } from "app/utils/constants";
-import WeatherInfoModal from "app/components/WeatherInfoModal";
+import WeatherInfoModal from "app/components/Weather/WeatherInfoModal";
 import weatherService from "app/services/weather-service";
 import { ICapitalWeatherInfo } from "app/utils/interfaces/weather";
 
