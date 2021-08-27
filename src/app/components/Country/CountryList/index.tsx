@@ -63,6 +63,7 @@ const CountryList: React.FC = () => {
       setLoading(false);
     }
   };
+
   useEffect(() => {
     getCountries();
     // eslint-disable-next-line react-hooks/exhaustive-deps
