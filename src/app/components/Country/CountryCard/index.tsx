@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -7,11 +6,7 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import { CardMedia } from "@material-ui/core";
-import WeatherInfoModal from "app/components/WeatherInfoModal";
-import { ERROR_FETCHING_WEATHER } from "app/utils/constants";
 import { ICountry } from "app/utils/interfaces/country";
-import { ICapitalWeatherInfo } from "app/utils/interfaces/weather";
-import weatherService from "app/services/weather-service";
 
 const useStyles = makeStyles({
   root: {
@@ -35,8 +30,6 @@ const CountryCard = ({
   onClickWeatherCapitalButton,
 }: CountryCardProps) => {
   const classes = useStyles();
- 
-
   return (
     <Card className={classes.root}>
       <CardActionArea>
@@ -63,7 +56,7 @@ const CountryCard = ({
       </CardActionArea>
       <CardActions>
         <Button
-          onClick={() => onClickWeatherCapitalButton(country)}
+          onClick={onClickWeatherCapitalButton}
           variant="contained"
           color="primary"
           size="small"

@@ -76,7 +76,12 @@ const CountryList: React.FC = () => {
         {countries.map((country: ICountry) => {
           return (
             <Grid item key={country.alpha2Code} xs={12} sm={6} md={4}>
-              <CountryCard country={country} />
+              <CountryCard
+                country={country}
+                onClickWeatherCapitalButton={() =>
+                  handleGetCapitalWeatherInfo(country)
+                }
+              />
             </Grid>
           );
         })}
