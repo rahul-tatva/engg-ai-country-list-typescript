@@ -27,81 +27,51 @@ const useStyles = makeStyles({
 
 interface CountryCardProps {
   country: ICountry;
-  onClickWeatherCapitalButton:Function;
+  onClickWeatherCapitalButton: Function;
 }
 
-const CountryCard = ({ country, onClickWeatherCapitalButton }: CountryCardProps) => {
+const CountryCard = ({
+  country,
+  onClickWeatherCapitalButton,
+}: CountryCardProps) => {
   const classes = useStyles();
-  const [openModal, setOpenModal] = useState(false);
-  const [capitalWeatherInfo, setCapitalWeatherInfo] =
-    useState<ICapitalWeatherInfo>({} as ICapitalWeatherInfo);
-
-  const handleGetCapitalWeatherInfo = async (currentCountry: ICountry) => {
-    try {
-      const result = await weatherService.getWeatherByCity(
-        currentCountry.capital
-      );
-      if (result.data) {
-        setCapitalWeatherInfo(result.data);
-        setOpenModal(true);
-      }
-    } catch (e) {
-      alert(ERROR_FETCHING_WEATHER);
-    } finally {
-    }
-  };
-
-  const handleClose = () => setOpenModal(false);
+ 
 
   return (
-    <>
-      <Card className={classes.root}>
-        <CardActionArea>
-          <CardMedia
-            className={classes.media}
-            image={country.flag}
-            title={country.name}
-          />
-          <CardContent>
-            <Typography gutterBottom variant="h6">
-              {country.name}
-              <Typography
-                variant="subtitle1"
-                component="p"
-                color="textSecondary"
-              >
-                {country.capital}
-              </Typography>
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              Population : {country.population}
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              Latitude, Longitude :{" "}
-              {country.latlng[0] + "°  " + country.latlng[1] + "°"}
-            </Typography>
-          </CardContent>
-        </CardActionArea>
-        <CardActions>
-          <Button
-            onClick={() => onClickWeatherCapitalButton(country)}
-            variant="contained"
-            color="primary"
-            size="small"
-          >
-            Capital Weather
-          </Button>
-        </CardActions>
-      </Card>
-      {/* review this thing */}
-      {openModal && (
-        <WeatherInfoModal
-          open={openModal}
-          handleClose={handleClose}
-          capitalWeatherInfo={capitalWeatherInfo}
+    <Card className={classes.root}>
+      <CardActionArea>
+        <CardMedia
+          className={classes.media}
+          image={country.flag}
+          title={country.name}
         />
-      )}
-    </>
+        <CardContent>
+          <Typography gutterBottom variant="h6">
+            {country.name}
+            <Typography variant="subtitle1" component="p" color="textSecondary">
+              {country.capital}
+            </Typography>
+          </Typography>
+          <Typography variant="body2" color="textSecondary" component="p">
+            Population : {country.population}
+          </Typography>
+          <Typography variant="body2" color="textSecondary" component="p">
+            Latitude, Longitude :{" "}
+            {country.latlng[0] + "°  " + country.latlng[1] + "°"}
+          </Typography>
+        </CardContent>
+      </CardActionArea>
+      <CardActions>
+        <Button
+          onClick={() => onClickWeatherCapitalButton(country)}
+          variant="contained"
+          color="primary"
+          size="small"
+        >
+          Capital Weather
+        </Button>
+      </CardActions>
+    </Card>
   );
 };
 

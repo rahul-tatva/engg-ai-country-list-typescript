@@ -10,7 +10,13 @@ import { ICountry } from "app/utils/interfaces/country";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import CountryCard from "app/components/Country/CountryCard";
-import { ERROR_FETCHING_COUNTRIES } from "app/utils/constants";
+import {
+  ERROR_FETCHING_COUNTRIES,
+  ERROR_FETCHING_WEATHER,
+} from "app/utils/constants";
+import WeatherInfoModal from "app/components/WeatherInfoModal";
+import weatherService from "app/services/weather-service";
+import { ICapitalWeatherInfo } from "app/utils/interfaces/weather";
 
 const useStyles = makeStyles((theme) => ({
   cardGrid: {
@@ -24,6 +30,10 @@ const CountryList: React.FC = () => {
   const { countryName } = useParams<{ countryName: string }>();
   const [loading, setLoading] = useState(true);
   const [countries, setCountries] = useState<ICountry[]>([]);
+  const [openModal, setOpenModal] = useState(false);
+
+  const [capitalWeatherInfo, setCapitalWeatherInfo] =
+    useState<ICapitalWeatherInfo>({} as ICapitalWeatherInfo);
 
   const handleGetCapitalWeatherInfo = async (currentCountry: ICountry) => {
     try {
@@ -40,15 +50,16 @@ const CountryList: React.FC = () => {
     }
   };
 
+  const handleClose = () => setOpenModal(false);
+
   const getCountries = async () => {
     try {
-      // setLoading(true);
       const result = await countryService.getByName(countryName);
       if (result.data) {
         setCountries(result.data);
       }
     } catch (e) {
-      // alert(e);
+      console.log(e);
     } finally {
       setLoading(false);
     }
@@ -74,13 +85,13 @@ const CountryList: React.FC = () => {
             {ERROR_FETCHING_COUNTRIES}
           </Typography>
         )}
-         {openModal && (
-        <WeatherInfoModal
-          open={openModal}
-          handleClose={handleClose}
-          capitalWeatherInfo={capitalWeatherInfo}
-        />
-      )}
+        {openModal && (
+          <WeatherInfoModal
+            open={openModal}
+            handleClose={handleClose}
+            capitalWeatherInfo={capitalWeatherInfo}
+          />
+        )}
       </Grid>
     </Container>
   );
