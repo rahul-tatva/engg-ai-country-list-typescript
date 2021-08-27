@@ -1,14 +1,16 @@
-import { AxiosResponse } from "axios"
-import { weatherHttpClient } from "app/services/http.service"
+import { AxiosResponse } from "axios";
+import { weatherHttpClient } from "app/services/http.service";
 import { ICapitalWeatherInfo } from "app/utils/interfaces/weather";
 
 const getWeatherByCity = (
-    cityName: string
+  cityName: string
 ): Promise<AxiosResponse<ICapitalWeatherInfo>> =>
-    weatherHttpClient.get(`/current?access_key=${process.env.REACT_APP_WEATHER_API_KEY}&query=${cityName}`);
+  weatherHttpClient.get(
+    `/current?access_key=${process.env.REACT_APP_WEATHER_API_KEY}&query=${cityName}`
+  );
 
 export const weatherService = {
-    getWeatherByCity,
-}
+  getWeatherByCity,
+};
 
-export default weatherService
+export default weatherService;
