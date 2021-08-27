@@ -1,12 +1,13 @@
 export interface ILocation {
   name: string;
+  country: string;
 }
 
 export interface ICurrentWeather {
-  weather_icons: any[];
-  temperature: string;
-  wind_speed: string;
-  precip: string;
+  weather_icons: string[];
+  temperature: number;
+  wind_speed: number;
+  precip: number;
 }
 
 export interface ICapitalWeatherInfo {

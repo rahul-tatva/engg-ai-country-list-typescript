@@ -30,11 +30,12 @@ interface CountryCardProps {
 }
 
 const CountryCard = (props: CountryCardProps) => {
-  const [openModal, setOpenModal] = React.useState(false);
-  const [capitalWeatherInfo, setCapitalWeatherInfo] =
-    useState<ICapitalWeatherInfo>({} as ICapitalWeatherInfo);
   const { country } = props;
   const classes = useStyles();
+  const [openModal, setOpenModal] = useState(false);
+  const [capitalWeatherInfo, setCapitalWeatherInfo] =
+    useState<ICapitalWeatherInfo>({} as ICapitalWeatherInfo);
+
   const handleGetCapitalWeatherInfo = async (currentCountry: ICountry) => {
     try {
       const result = await weatherService.getWeatherByCity(
@@ -50,9 +51,8 @@ const CountryCard = (props: CountryCardProps) => {
     } finally {
     }
   };
-  const handleClose = () => {
-    setOpenModal(false);
-  };
+
+  const handleClose = () => setOpenModal(false);
 
   return (
     <>

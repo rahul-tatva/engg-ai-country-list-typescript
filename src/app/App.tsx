@@ -18,7 +18,7 @@ const App: React.FC = () => {
         <Switch>
           <Route exact path="/" component={CountrySearchForm} />
           <Route exact path={Routes.CountriesByName} component={CountryList} />
-          {/* <Redirect path="*" to="/" /> */}
+          <Redirect to="/" />
         </Switch>
       </Router>
     </div>
