@@ -25,11 +25,11 @@ const useStyles = makeStyles({
   },
 });
 
-interface CountryCardProp {
+interface CountryCardProps {
   country: ICountry;
 }
 
-const CountryCard = (props: CountryCardProp) => {
+const CountryCard = (props: CountryCardProps) => {
   const [openModal, setOpenModal] = React.useState(false);
   const [capitalWeatherInfo, setCapitalWeatherInfo] =
     useState<ICapitalWeatherInfo>({} as ICapitalWeatherInfo);
