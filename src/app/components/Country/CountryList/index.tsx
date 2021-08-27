@@ -9,8 +9,8 @@ import countryService from "app/services/country-service";
 import { ICountry } from "app/utils/interfaces/country";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import CountryCard from "app/components/CountryCard";
-import { ERROR_FETCHING_COUNTRIES } from "app/utils/messages";
+import CountryCard from "app/components/Country/CountryCard";
+import { ERROR_FETCHING_COUNTRIES } from "app/utils/constants";
 
 const useStyles = makeStyles((theme) => ({
   cardGrid: {
@@ -24,6 +24,21 @@ const CountryList: React.FC = () => {
   const { countryName } = useParams<{ countryName: string }>();
   const [loading, setLoading] = useState(true);
   const [countries, setCountries] = useState<ICountry[]>([]);
+
+  const handleGetCapitalWeatherInfo = async (currentCountry: ICountry) => {
+    try {
+      const result = await weatherService.getWeatherByCity(
+        currentCountry.capital
+      );
+      if (result.data) {
+        setCapitalWeatherInfo(result.data);
+        setOpenModal(true);
+      }
+    } catch (e) {
+      alert(ERROR_FETCHING_WEATHER);
+    } finally {
+    }
+  };
 
   const getCountries = async () => {
     try {
@@ -54,11 +69,18 @@ const CountryList: React.FC = () => {
             </Grid>
           );
         })}
-        {!loading && countries.length === 0 && (
+        {!loading && countries.length && (
           <Typography gutterBottom variant="h6">
             {ERROR_FETCHING_COUNTRIES}
           </Typography>
         )}
+         {openModal && (
+        <WeatherInfoModal
+          open={openModal}
+          handleClose={handleClose}
+          capitalWeatherInfo={capitalWeatherInfo}
+        />
+      )}
       </Grid>
     </Container>
   );

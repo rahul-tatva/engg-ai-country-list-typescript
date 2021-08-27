@@ -1,18 +1,32 @@
-import axios from "axios";
+import { COUNTRIES_API_BASE_URL, WEATHER_API_BASE_URL } from "app/utils/constants";
+import axios, { AxiosError, AxiosResponse } from "axios";
 
-const httpInstance = axios.create();
+const httpClient = axios;
 
-export const countryHttpClient = axios.create({
-  baseURL: process.env.REACT_APP_COUNTRY_API,
+httpClient.interceptors.response.use(
+  (response: AxiosResponse) => response,
+  (error: AxiosError) => {
+    switch (error.response?.status) {
+      case HttpStatusCodes.Unauthorized:
+      case HttpStatusCodes.BadRequest:
+      case HttpStatusCodes.ConflictError:
+        break;
+      case HttpStatusCodes.InternalServerError:
+        if (process.env.NODE_ENV === "development") {
+          console.log("Internal Server Error");
+        } else {
+          console.log("Something went wrong");
+        }
+        break;
+      default:
+        break;
+    }
+    return Promise.reject(error);
+  }
+);
+
+export default httpClient;
+
+export const weatherHttpClient = httpClient.create({
+  baseURL: WEATHER_API_BASE_URL,
 });
-
-export const weatherHttpClient = axios.create({
-  baseURL: process.env.REACT_APP_WEATHER_API,
-});
-
-const http = {
-  get: httpInstance.get,
-  post: httpInstance.post,
-};
-
-export default http;

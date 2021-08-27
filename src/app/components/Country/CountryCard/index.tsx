@@ -8,7 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import { CardMedia } from "@material-ui/core";
 import WeatherInfoModal from "app/components/WeatherInfoModal";
-import { ERROR_FETCHING_WEATHER } from "../../utils/messages";
+import { ERROR_FETCHING_WEATHER } from "app/utils/constants";
 import { ICountry } from "app/utils/interfaces/country";
 import { ICapitalWeatherInfo } from "app/utils/interfaces/weather";
 import weatherService from "app/services/weather-service";
@@ -27,10 +27,10 @@ const useStyles = makeStyles({
 
 interface CountryCardProps {
   country: ICountry;
+  onClickWeatherCapitalButton:Function;
 }
 
-const CountryCard = (props: CountryCardProps) => {
-  const { country } = props;
+const CountryCard = ({ country, onClickWeatherCapitalButton }: CountryCardProps) => {
   const classes = useStyles();
   const [openModal, setOpenModal] = useState(false);
   const [capitalWeatherInfo, setCapitalWeatherInfo] =
@@ -46,7 +46,6 @@ const CountryCard = (props: CountryCardProps) => {
         setOpenModal(true);
       }
     } catch (e) {
-      alert(e);
       alert(ERROR_FETCHING_WEATHER);
     } finally {
     }
@@ -85,7 +84,7 @@ const CountryCard = (props: CountryCardProps) => {
         </CardActionArea>
         <CardActions>
           <Button
-            onClick={() => handleGetCapitalWeatherInfo(country)}
+            onClick={() => onClickWeatherCapitalButton(country)}
             variant="contained"
             color="primary"
             size="small"
