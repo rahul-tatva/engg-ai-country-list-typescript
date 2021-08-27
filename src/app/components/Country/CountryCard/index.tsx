@@ -22,7 +22,7 @@ const useStyles = makeStyles({
 
 interface CountryCardProps {
   country: ICountry;
-  onClickWeatherCapitalButton: Function;
+  onClickWeatherCapitalButton: any;
 }
 
 const CountryCard = ({

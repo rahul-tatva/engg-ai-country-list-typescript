@@ -29,9 +29,8 @@ const CountryList: React.FC = () => {
   const classes = useStyles();
   const { countryName } = useParams<{ countryName: string }>();
   const [loading, setLoading] = useState(true);
+  const [showWeatherInfoModal, setShowWeatherInfoModal] = useState(false);
   const [countries, setCountries] = useState<ICountry[]>([]);
-  const [openModal, setOpenModal] = useState(false);
-
   const [capitalWeatherInfo, setCapitalWeatherInfo] =
     useState<ICapitalWeatherInfo>({} as ICapitalWeatherInfo);
 
@@ -42,15 +41,15 @@ const CountryList: React.FC = () => {
       );
       if (result.data) {
         setCapitalWeatherInfo(result.data);
-        setOpenModal(true);
+        setShowWeatherInfoModal(true);
       }
     } catch (e) {
-      alert(ERROR_FETCHING_WEATHER);
+      console.log(ERROR_FETCHING_WEATHER);
     } finally {
     }
   };
 
-  const handleClose = () => setOpenModal(false);
+  const handleClose = () => setShowWeatherInfoModal(false);
 
   const getCountries = async () => {
     try {
@@ -66,6 +65,7 @@ const CountryList: React.FC = () => {
   };
   useEffect(() => {
     getCountries();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -90,13 +90,11 @@ const CountryList: React.FC = () => {
             {ERROR_FETCHING_COUNTRIES}
           </Typography>
         )}
-        {openModal && (
-          <WeatherInfoModal
-            open={openModal}
-            handleClose={handleClose}
-            capitalWeatherInfo={capitalWeatherInfo}
-          />
-        )}
+        <WeatherInfoModal
+          open={showWeatherInfoModal}
+          handleClose={handleClose}
+          capitalWeatherInfo={capitalWeatherInfo}
+        />
       </Grid>
     </Container>
   );

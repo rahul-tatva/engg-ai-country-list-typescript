@@ -1,4 +1,4 @@
-import { COUNTRIES_API_BASE_URL, WEATHER_API_BASE_URL } from "app/utils/constants";
+import { HttpStatusCodes } from "app/utils/enums/http-status-codes";
 import axios, { AxiosError, AxiosResponse } from "axios";
 
 const httpClient = axios;
@@ -9,7 +9,6 @@ httpClient.interceptors.response.use(
     switch (error.response?.status) {
       case HttpStatusCodes.Unauthorized:
       case HttpStatusCodes.BadRequest:
-      case HttpStatusCodes.ConflictError:
         break;
       case HttpStatusCodes.InternalServerError:
         if (process.env.NODE_ENV === "development") {
@@ -26,7 +25,3 @@ httpClient.interceptors.response.use(
 );
 
 export default httpClient;
-
-export const weatherHttpClient = httpClient.create({
-  baseURL: WEATHER_API_BASE_URL,
-});

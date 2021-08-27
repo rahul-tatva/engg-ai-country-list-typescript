@@ -1,6 +1,6 @@
 import { ICountry } from "app/utils/interfaces/country";
 import { AxiosResponse } from "axios";
-import httpClient from "app/services/http.service";
+import httpClient from "app/services/base-service";
 import { COUNTRIES_API_BASE_URL } from "app/configs";
 
 const countryHttpClient = httpClient.create({
